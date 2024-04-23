@@ -31,7 +31,6 @@ class GameController extends Controller
         }
     }
 
-
     public function createGames(Request $request) {
 
         try {
@@ -60,25 +59,54 @@ class GameController extends Controller
         );
         }
     }
-    
 
-    public function updateGamesById($id) {
+    public function updateGamesById(Request $request, $id) {
+        try {
+            $gameId = $id;
 
-        return 'update GAME'.$id;
+            $gameTitle = $request->input('title');
+
+            $game = Game::find($gameId);
+
+            //Validacion de que existe la tarea
+            if($gameTitle) {
+                $game->title = $gameTitle;
+            }
+
+            $game->save();
+
+            return response()->json(
+                [
+                    "success" => true,
+                    "message" => "Games updated successfully",
+                    "data" => $game
+                ],
+                200
+            );
+
+        } catch (\Throwable $th) {
+            return response()->json(
+            [
+                "success" => false,
+                "message" => "Games cant be updated successfully",
+                "error" => $th->getMessage()
+            ],
+            500
+        );
+        }
     }
-
 
     public function deleteGamesById($id) {
         try{
-            $game = Game::find($id);
+            $gameDelete = Game::find($id);
 
-            $game->delete();
+            $gameDelete->delete();
 
             return response()->json(
                 [
                     "success" => true,
                     "message" => "Games delete successfully",
-                    "data" => $game
+                    "data" => $gameDelete
                 ],
                 200
             );
@@ -93,8 +121,5 @@ class GameController extends Controller
             500
         );
         }
-
-        
-        return 'delete GAME' .$id;
     }
 }
