@@ -67,8 +67,34 @@ class GameController extends Controller
         return 'update GAME'.$id;
     }
 
-    public function deleteGamesById($id) {
 
+    public function deleteGamesById($id) {
+        try{
+            $game = Game::find($id);
+
+            $game->delete();
+
+            return response()->json(
+                [
+                    "success" => true,
+                    "message" => "Games delete successfully",
+                    "data" => $game
+                ],
+                200
+            );
+
+        } catch (\Throwable $th) {
+            return response()->json(
+            [
+                "success" => false,
+                "message" => "Games cant be delete successfully",
+                "error" => $th->getMessage()
+            ],
+            500
+        );
+        }
+
+        
         return 'delete GAME' .$id;
     }
 }
