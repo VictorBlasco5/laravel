@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 
 class GameController extends Controller
 {
-    public function getAllGames()
-    {
+    public function getAllGames() {
         try {
             $games = Game::all();
 
@@ -32,12 +31,36 @@ class GameController extends Controller
         }
     }
 
+
     public function createGames(Request $request) {
 
-        $title = $request->input('title');
+        try {
+            $game = new Game;
+            $game->title = $request->input('title');
 
-        return 'CREATE GAME';
+            $game->save();
+
+            return response()->json(
+                [
+                    "success" => true,
+                    "message" => "Games created successfully",
+                    "data" => $game
+                ],
+                200
+            );
+            
+        } catch (\Throwable $th) {
+            return response()->json(
+            [
+                "success" => false,
+                "message" => "Games cant be created successfully",
+                "error" => $th->getMessage()
+            ],
+            500
+        );
+        }
     }
+    
 
     public function updateGamesById($id) {
 
