@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GameController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,22 +23,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/games', function () {
-    return 'GET ALL GAMES';
-});
+Route::get('/games', [GameController:: class, 'getAllGames']);
+Route::post('/games', [GameController:: class, 'createGames']);
+Route::put('/games/{id}', [GameController:: class,'updateGamesById']);
+Route::delete('/games/{id}', [GameController:: class,'deleteGamesById']);
 
-Route::post('/games', function (Request $request) {
-    dump($request->input('title'));
+// Route::post('/games', function (Request $request) {
+//     dump($request->input('title'));
 
-    $title = $request->input('title');
+//     $title = $request->input('title');
 
-    return 'CREATE A GAME';
-});
+//     return 'CREATE A GAME';
+// });
 
-Route::put('/games/{id}', function ($id) {
-    return 'update GAME' .$id;
-});
+// Route::put('/games/{id}', function ($id) {
+//     return 'update GAME' .$id;
+// });
 
-Route::delete('/games/{id}', function ($id) {
-    return 'delete GAME' .$id;
-});
+// Route::delete('/games/{id}', function ($id) {
+//     return 'delete GAME' .$id;
+// });
