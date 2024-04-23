@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,18 +29,7 @@ Route::post('/games', [GameController:: class, 'createGames']);
 Route::put('/games/{id}', [GameController:: class,'updateGamesById']);
 Route::delete('/games/{id}', [GameController:: class,'deleteGamesById']);
 
-// Route::post('/games', function (Request $request) {
-//     dump($request->input('title'));
-
-//     $title = $request->input('title');
-
-//     return 'CREATE A GAME';
-// });
-
-// Route::put('/games/{id}', function ($id) {
-//     return 'update GAME' .$id;
-// });
-
-// Route::delete('/games/{id}', function ($id) {
-//     return 'delete GAME' .$id;
-// });
+Route::get('/users', [UserController:: class, 'getAllUsers']);
+Route::post('/users', [UserController:: class, 'createUsers']);
+Route::put('/users/{id}', [UserController:: class,'updateUsersById']);
+Route::delete('/users/{id}', [UserController:: class,'deleteUsersById']);
